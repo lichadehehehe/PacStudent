@@ -7,13 +7,7 @@ using UnityEngine;
 public class Tweener : MonoBehaviour
 {
     public Tween activeTween;
-    Vector3 point3 = new Vector3(-5.09f, 3.9f, 0f);
-    Vector3 point2 = new Vector3(-5.09f, 5.41f, 0f);
-    Vector3 point1 = new Vector3(-0.7f, 5.41f, 0f);
-    Vector3 point0 = new Vector3(-0.7f, 3.9f, 0f);
-
     
-    private int nextPointIndex = 0;
     //public List<Tween> activeTweens = new List <Tween>();
     void Start()
     {
