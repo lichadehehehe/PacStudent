@@ -28,7 +28,7 @@ public class LevelGenerator : MonoBehaviour
  {2,2,2,2,2,1,5,3,3,0,4,0,0,0},
  {0,0,0,0,0,0,5,0,0,0,4,0,0,0},
  };
-
+    
    
 
     void Start()
@@ -47,18 +47,71 @@ public class LevelGenerator : MonoBehaviour
         float initialX = -5.456f;
         float initialY = 5.803f;
         //use a double for loop to generate the level map
-        for (int outerLoop = 0; outerLoop < 14; outerLoop++)
+        for (int outerLoop = 0; outerLoop <= levelMap.GetUpperBound(0); outerLoop++)
         {
-            for (int innerLoop = 0; innerLoop < 14; innerLoop++)
+            for (int innerLoop = 0; innerLoop <= levelMap.GetUpperBound(1); innerLoop++)
             {
                 //for each next element in the levelMap array, increment the x coordinate by 0.4 and subtract the y coordinate by 0.4
-                Instantiate(LevelTranslater(levelMap[outerLoop,innerLoop]), 
+                Instantiate(LevelTranslater(levelMap[outerLoop, innerLoop]),
                     new Vector3(initialX + innerLoop * 0.4f, initialY - outerLoop * 0.4f, 0), Quaternion.identity);
                 //Debug.Log(LevelTranslater(levelMap[outerLoop, innerLoop]));
                 //Debug.Log(levelMap[outerLoop, innerLoop]);
             }
 
         }
+
+        
+            //use a double for loop to generate the top right level map
+            
+        for (int outerLoop = 0; outerLoop <= levelMap.GetUpperBound(0); outerLoop++)
+        {
+            for (int innerLoop = levelMap.GetUpperBound(1); innerLoop >=0; innerLoop--)
+            {
+                //for each next element in the levelMap array, increment the x coordinate by 0.4 and subtract the y coordinate by 0.4
+                Instantiate(LevelTranslater(levelMap[outerLoop, innerLoop]),
+                    new Vector3(initialX - (innerLoop - levelMap.GetUpperBound(1)) * 0.4f + (levelMap.GetUpperBound(1) + 1) * 0.4f, 
+                                initialY - outerLoop * 0.4f , 0), Quaternion.identity);
+                //Debug.Log(LevelTranslater(levelMap[outerLoop, innerLoop]));
+                //Debug.Log(levelMap[outerLoop, innerLoop]);
+            }
+
+        }
+        
+
+        //use a double for loop to generate the bottom left level map
+
+        for (int outerLoop = levelMap.GetUpperBound(0) - 1; outerLoop >= 0; outerLoop--)
+        {
+            for (int innerLoop = 0; innerLoop <= levelMap.GetUpperBound(1); innerLoop++)
+            {
+                //for each next element in the levelMap array, increment the x coordinate by 0.4 and subtract the y coordinate by 0.4
+                Instantiate(LevelTranslater(levelMap[outerLoop, innerLoop]),
+                    new Vector3(initialX + innerLoop * 0.4f,
+                                initialY + ((outerLoop + 1f) - levelMap.GetUpperBound(0)) * 0.4f - (levelMap.GetUpperBound(0) + 1) * 0.4f, 0), 
+                                Quaternion.identity);
+                //Debug.Log(LevelTranslater(levelMap[outerLoop, innerLoop]));
+                //Debug.Log(levelMap[outerLoop, innerLoop]);
+            }
+
+        }
+
+        //use a double for loop to generate the bottom right level map
+
+        for (int outerLoop = levelMap.GetUpperBound(0) - 1; outerLoop >= 0; outerLoop--)
+        {
+            for (int innerLoop = levelMap.GetUpperBound(1); innerLoop >= 0; innerLoop--)
+            {
+                //for each next element in the levelMap array, increment the x coordinate by 0.4 and subtract the y coordinate by 0.4
+                Instantiate(LevelTranslater(levelMap[outerLoop, innerLoop]),
+                    new Vector3(initialX - (innerLoop - levelMap.GetUpperBound(1)) * 0.4f + (levelMap.GetUpperBound(1) + 1) * 0.4f,
+                                initialY + ((outerLoop + 1f) - levelMap.GetUpperBound(0)) * 0.4f - (levelMap.GetUpperBound(0) + 1) * 0.4f, 0),
+                                Quaternion.identity);
+                //Debug.Log(LevelTranslater(levelMap[outerLoop, innerLoop]));
+                //Debug.Log(levelMap[outerLoop, innerLoop]);
+            }
+
+        }
+
 
         //LevelTranslater() reads the 2d array of LevelMap and return a gameObject
         GameObject LevelTranslater(int levelInt)
@@ -93,6 +146,7 @@ public class LevelGenerator : MonoBehaviour
             }
 
         }
+        
     }
 
     // Update is called once per frame
@@ -101,5 +155,4 @@ public class LevelGenerator : MonoBehaviour
         
     }
 
-    
 }
