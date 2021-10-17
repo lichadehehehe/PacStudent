@@ -6,10 +6,19 @@ using UnityEngine.UI;
 
 public class LoadScene : MonoBehaviour
 {
+
+    public RectTransform canvasScreenRect;
+
+
     // Start is called before the first frame update
     void Start()
     {
-        
+
+
+        canvasScreenRect.sizeDelta = new Vector2(Screen.width, Screen.height);
+        canvasScreenRect.anchoredPosition = new Vector2(0f, 0f);
+
+
     }
 
     // Update is called once per frame
@@ -22,6 +31,14 @@ public class LoadScene : MonoBehaviour
     {
         SceneManager.LoadSceneAsync("SampleScene", LoadSceneMode.Single);
         
+
+
+    }
+
+    public void QuitGame()
+    {
+
+        SceneManager.LoadSceneAsync("StartScene", LoadSceneMode.Single);
 
 
 
