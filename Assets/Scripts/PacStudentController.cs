@@ -21,6 +21,26 @@ public class PacStudentController : MonoBehaviour
 
     //Animator anim;
 
+    public AudioSource footStepSource;
+
+    //Collision collision;
+    Vector3 tempPosition;
+
+    //public int collisionCounter = 0;
+
+    //public int tempCounter = 0;
+
+    //public bool collided = false;
+
+    //float Xdistance = 0;
+
+    //float Ydistance = 0;
+
+    Vector3 previousPosition;
+
+
+    //private float nextActionTime = 0.0f;
+    //public float period = 1f;
 
     void Awake()
     {
@@ -31,52 +51,36 @@ public class PacStudentController : MonoBehaviour
 
         Vector3 initialPacPosition = new Vector3(-5.456f + 0.4f, 5.803f - 0.4f, 0);
         pacStudent.transform.position = initialPacPosition;
-        
-        /*
-        for (int outerLoop = 0; outerLoop <= levelMap.GetUpperBound(0); outerLoop++)
-        {
-            for (int innerLoop = 0; innerLoop <= levelMap.GetUpperBound(1); innerLoop++)
-            {
-                //for each next element in the levelMap array, increment the x coordinate by 0.4 and subtract the y coordinate by 0.4
-                //Instantiate(LevelTranslater(levelMap[outerLoop, innerLoop]),
-                    //new Vector3(initialX + innerLoop * 0.4f, initialY - outerLoop * 0.4f, 0), Quaternion.identity);
-                //Debug.Log(LevelTranslater(levelMap[outerLoop, innerLoop]));
-                //Debug.Log(levelMap[outerLoop, innerLoop]);
-            }
-        }
-        */
+
+     
 
     }
     void Start()
     {
         levelGenerator = GetComponent<LevelGenerator>();
-        //tweener = GetComponent<Tweener>();
-       // Debug.Log(tweener);
-        //itemList = new List<GameObject>();
-        //itemList.Add(item);
-
-        //levelGenerator.levelMap
-
         
+        StartCoroutine(MyCoroutine());
+
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         Animator anim = gameObject.GetComponent<Animator>();
 
 
-        if (Input.GetKeyDown(KeyCode.D)) 
+
+        if (Input.GetKeyDown(KeyCode.D))
         {
             anim.SetTrigger("Right");
             anim.ResetTrigger("Left");
             anim.ResetTrigger("Up");
             anim.ResetTrigger("Down");
         }
-            
 
 
-        if (Input.GetKeyDown(KeyCode.A)) 
+
+        if (Input.GetKeyDown(KeyCode.A))
         {
             anim.SetTrigger("Left");
             anim.ResetTrigger("Right");
@@ -104,78 +108,33 @@ public class PacStudentController : MonoBehaviour
             anim.ResetTrigger("Down");
 
         }
-            
-
 
 
 
         GetMovementVector();
         CharacterPostion();
-       // CharacterRotation();
+       
+        FootstepAudio();
     }
 
-    /*
-    private void LoopAddTween(string key)
-    {
-        bool added = false;
-        GameObject pacStudent = GameObject.FindGameObjectWithTag("Player");
-        //foreach (pacStudent)
-        //{
-        if (key == "a")
-            {
-                added = tweener.AddTween(pacStudent.transform, pacStudent.transform.position, new Vector3(-2.0f, 0.5f, 0.0f), 1.5f);
-                Debug.Log("a pressed");
-            }
-                
-            if (key == "d")
-            {
-            added = tweener.AddTween(pacStudent.transform, pacStudent.transform.position, new Vector3(2.0f, 0.5f, 0.0f), 1.5f);
-            }
-            if (key == "s")
-            {
-            added = tweener.AddTween(pacStudent.transform, pacStudent.transform.position, new Vector3(0.0f, 0.5f, -2.0f), 0.5f);
-            }
-            if (key == "w")
-            {
-            added = tweener.AddTween(pacStudent.transform, pacStudent.transform.position, new Vector3(0.0f, 0.5f, 2.0f), 0.5f);
-            }
-
-            //if (added)
-                //break;
-        //}
-    }
-
-    
-    private Vector3 levelPositionIndicator(int x, int y)
-    {
-        Vector3 thePosition = new Vector3();
-
-        //thePosition = levelMap[x, y];
-
-
-
-        return thePosition;
-    }
-    */
+   
 
     void GetMovementVector()
     {
-        //get the horizontal and vertical movement via the input
-        //movement.x = Input.GetAxis("Horizontal") ;
-        //movement.z = Input.GetAxis("Vertical");
-        
+       
+
         if (Input.GetAxis("Horizontal") > 0)
         {
 
             movement.x++;
-            //transform.rotation = Quaternion.Euler(0, 0, 180);
-            
+           
+
         }
 
         if (Input.GetAxis("Horizontal") < 0)
         {
             movement.x--;
-            
+
 
         }
 
@@ -183,14 +142,14 @@ public class PacStudentController : MonoBehaviour
         {
 
             movement.y++;
-            
+
 
         }
 
         if (Input.GetAxis("Vertical") < 0)
         {
             movement.y--;
-            
+
 
         }
         movement = Vector3.ClampMagnitude(movement, 1.0f);
@@ -200,20 +159,71 @@ public class PacStudentController : MonoBehaviour
 
     void CharacterPostion()
     {
-        //move the character to the desire posision 
+        
         transform.Translate(movement * walkSpeed * Time.deltaTime, Space.World);
+
     }
 
-
-
-    void CharacterRotation()
+    void FootstepAudio()
     {
-        if (movement != Vector3.zero)
+
+        AudioSource footStepSource = gameObject.GetComponent<AudioSource>();
+        if (tempPosition.x - previousPosition.x > 0.1 || tempPosition.y - previousPosition.y > 0.1)
         {
-            transform.rotation = Quaternion.LookRotation(movement);
+            if (!footStepSource.isPlaying)
+            {
+
+                footStepSource.Play();
+
+                Debug.Log("moving");
+
+            }
+
         }
+
+        else if (tempPosition.x - previousPosition.x < 0.1 || tempPosition.y - previousPosition.y < 0.1)
+        {
+            if (footStepSource.isPlaying)
+            {
+                footStepSource.Stop();
+
+                Debug.Log("not moving");
+
+            }
+
+        }
+
     }
 
+    IEnumerator MyCoroutine()
+    {
 
+    marker:
 
+        //yield return null;
+        tempPosition = gameObject.transform.position;
+        Debug.Log("tempPosition: " + tempPosition);
+        yield return new WaitForSecondsRealtime(0.4f);
+        previousPosition = gameObject.transform.position;
+        Debug.Log("previousPosition" + previousPosition);
+        yield return new WaitForSecondsRealtime(0.4f);
+
+        goto marker;
+
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -7,6 +7,7 @@ TagManager:
   - PacMan
   - ManualMap
   - LevelManager
+  - Impassable
   layers:
   - Default
   - TransparentFX
