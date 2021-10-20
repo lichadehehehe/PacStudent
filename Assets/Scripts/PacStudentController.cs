@@ -24,7 +24,7 @@ public class PacStudentController : MonoBehaviour
 
     Vector3 previousPosition;
 
-
+    ParticleSystem theAshParticles;
     void Awake()
     {
         int[,] levelMap = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelGenerator>().levelMap;
@@ -151,13 +151,14 @@ public class PacStudentController : MonoBehaviour
     {
 
         AudioSource footStepSource = gameObject.GetComponent<AudioSource>();
+        ParticleSystem theAshParticles = gameObject.GetComponent<ParticleSystem>();
         if (tempPosition.x - previousPosition.x > 0.1 || tempPosition.y - previousPosition.y > 0.1)
         {
             if (!footStepSource.isPlaying)
             {
 
                 footStepSource.Play();
-
+                theAshParticles.Play();
                 Debug.Log("moving");
 
             }
@@ -169,7 +170,7 @@ public class PacStudentController : MonoBehaviour
             if (footStepSource.isPlaying)
             {
                 footStepSource.Stop();
-
+                theAshParticles.Stop();
                 Debug.Log("not moving");
 
             }
