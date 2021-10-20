@@ -27,7 +27,7 @@ public class PacStudentController : MonoBehaviour
     ParticleSystem theAshParticles;
     void Awake()
     {
-        int[,] levelMap = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelGenerator>().levelMap;
+        int[,] levelMap = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<LevelGenerator>().levelMap;
         GameObject pacStudent = GameObject.FindGameObjectWithTag("Player");
 
         //get the initial position of the levelgenerator, make the pacstudent to the top left corner of the map
