@@ -10,7 +10,7 @@ public class LevelGenerator : MonoBehaviour
     // declare the map array
 
 
-    int[,] levelMap =
+    public int[,] levelMap =
  {
  {1,2,2,2,2,2,2,2,2,2,2,2,2,7},
  {2,5,5,5,5,5,5,5,5,5,5,5,5,4},
@@ -35,6 +35,7 @@ public class LevelGenerator : MonoBehaviour
     {
         //disable all manual map assets
         GameObject.Find("AllMapAssets").SetActive(false);
+        
         //load the prefabs outside game camera
         GameObject coin = (GameObject)Instantiate(Resources.Load("coinPrefab"));
         GameObject roc = (GameObject)Instantiate(Resources.Load("rocPrefab"));
@@ -153,6 +154,11 @@ public class LevelGenerator : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public int[,] getNumArray()
+    {
+        return (int[,])levelMap.Clone();
     }
 
 }
