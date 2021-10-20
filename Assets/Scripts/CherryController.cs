@@ -7,8 +7,8 @@ public class CherryController : MonoBehaviour
     // Start is called before the first frame update
     //GameObject cherry;
 
-    float initialX = -5.456f;
-    float initialY = 5.803f;
+    //float initialX = -5.456f;
+    //float initialY = 5.803f;
 
     Vector3 upperLeftScreen = new Vector3(0, Screen.height, 0);
     Vector3 upperRightScreen = new Vector3(Screen.width, Screen.height, 0);
@@ -29,7 +29,6 @@ public class CherryController : MonoBehaviour
     {
         
 
-        //cherry.transform.position = throughCenterScreenTilEndPoint;
 
         StartCoroutine(MyCoroutine());
     }
@@ -42,7 +41,7 @@ public class CherryController : MonoBehaviour
 
     IEnumerator MyCoroutine()
     {
-    //new Vector3(Screen.width + 10, Screen.height + 10, 0.0f)
+    
     marker:
 
 

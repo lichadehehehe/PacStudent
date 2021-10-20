@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class LoadScene : MonoBehaviour
 {
 
-    public RectTransform canvasScreenRect;
+    //public RectTransform canvasScreenRect;
 
 
     // Start is called before the first frame update
@@ -15,13 +15,18 @@ public class LoadScene : MonoBehaviour
     {
 
 
-        canvasScreenRect.sizeDelta = new Vector2(Screen.width, Screen.height);
-        canvasScreenRect.anchoredPosition = new Vector2(0f, 0f);
+        //canvasScreenRect.sizeDelta = new Vector2(Screen.width, Screen.height);
+        //canvasScreenRect.anchoredPosition = new Vector2(0f, 0f);
+        
+        /*
+        if (canvasScreenRect == null)
+        {
+            //do nothing
+        }
 
-
+        */
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         

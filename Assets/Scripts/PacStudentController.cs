@@ -186,10 +186,10 @@ public class PacStudentController : MonoBehaviour
 
         //yield return null;
         tempPosition = gameObject.transform.position;
-        Debug.Log("tempPosition: " + tempPosition);
+        //Debug.Log("tempPosition: " + tempPosition);
         yield return new WaitForSecondsRealtime(0.4f);
         previousPosition = gameObject.transform.position;
-        Debug.Log("previousPosition" + previousPosition);
+        //Debug.Log("previousPosition" + previousPosition);
         yield return new WaitForSecondsRealtime(0.4f);
 
         goto marker;
