@@ -1,13 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//[RequireComponent(typeof(Rigidbody2D))]
+
 
 public class PacStudentController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    //[SerializeField] private GameObject item;
-    //private Tweener tweener;
+    
     private List<GameObject> itemList;
     private LevelGenerator levelGenerator;
     int[,] levelMap;
@@ -17,30 +15,15 @@ public class PacStudentController : MonoBehaviour
     private Vector3 movement;
     private float movementSqrMagnitude;
     public float walkSpeed = 1.5f;
-    //int [,] levelMap = levelGenerator.getNumArray();
-
-    //Animator anim;
+ 
 
     public AudioSource footStepSource;
 
-    //Collision collision;
+
     Vector3 tempPosition;
-
-    //public int collisionCounter = 0;
-
-    //public int tempCounter = 0;
-
-    //public bool collided = false;
-
-    //float Xdistance = 0;
-
-    //float Ydistance = 0;
 
     Vector3 previousPosition;
 
-
-    //private float nextActionTime = 0.0f;
-    //public float period = 1f;
 
     void Awake()
     {
