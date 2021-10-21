@@ -152,25 +152,30 @@ public class PacStudentController : MonoBehaviour
 
         AudioSource footStepSource = gameObject.GetComponent<AudioSource>();
         ParticleSystem theAshParticles = gameObject.GetComponent<ParticleSystem>();
-        if (tempPosition.x - previousPosition.x > 0.1 || tempPosition.y - previousPosition.y > 0.1)
+        ParticleSystem extraCollisionParticles = GameObject.FindGameObjectWithTag("EditorOnly").GetComponent<ParticleSystem>();
+
+
+        if (tempPosition.x - previousPosition.x > 0.05 || tempPosition.y - previousPosition.y > 0.05)
         {
             if (!footStepSource.isPlaying)
             {
 
                 footStepSource.Play();
                 theAshParticles.Play();
+                extraCollisionParticles.Stop();
                 Debug.Log("moving");
 
             }
 
         }
 
-        else if (tempPosition.x - previousPosition.x < 0.1 || tempPosition.y - previousPosition.y < 0.1)
+        else if (tempPosition.x - previousPosition.x < 0.05 || tempPosition.y - previousPosition.y < 0.05)
         {
             if (footStepSource.isPlaying)
             {
                 footStepSource.Stop();
                 theAshParticles.Stop();
+                extraCollisionParticles.Emit(500);
                 Debug.Log("not moving");
 
             }
