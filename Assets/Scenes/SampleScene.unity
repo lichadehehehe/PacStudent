@@ -28946,7 +28946,7 @@ GameObject:
   - component: {fileID: 759321684}
   m_Layer: 5
   m_Name: Score
-  m_TagString: Untagged
+  m_TagString: Score
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28967,8 +28967,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -16.75, y: 11.38}
-  m_SizeDelta: {x: 89.4185, y: 198.4851}
+  m_AnchoredPosition: {x: -14.5544, y: 11.38}
+  m_SizeDelta: {x: 528.5451, y: 198.4851}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &759321684
 MonoBehaviour:
@@ -42295,7 +42295,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1106672977}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.1, y: 1, z: 0.5}

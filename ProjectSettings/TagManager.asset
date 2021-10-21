@@ -8,6 +8,7 @@ TagManager:
   - ManualMap
   - LevelManager
   - Impassable
+  - Score
   layers:
   - Default
   - TransparentFX
