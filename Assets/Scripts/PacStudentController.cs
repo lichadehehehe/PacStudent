@@ -50,10 +50,28 @@ public class PacStudentController : MonoBehaviour
     void Update()
     {
         Animator anim = gameObject.GetComponent<Animator>();
+        int[,] levelMap = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<LevelGenerator>().levelMap;
+        if (gameObject.transform.position.x < -5.456f)
+        {
+            float originalY = gameObject.transform.position.y;
+
+            gameObject.transform.position = new Vector3(-5.456f + levelMap.GetUpperBound(1) * 0.4f * 2, originalY, 0);
+
+
+        }
+
+        if (gameObject.transform.position.x > -5.456f + levelMap.GetUpperBound(0) * 0.4f * 2)
+        {
+
+            float originalY = gameObject.transform.position.y;
+
+            gameObject.transform.position = new Vector3(-5.456f, originalY, 0);
 
 
 
-        if (Input.GetKeyDown(KeyCode.D))
+        }
+
+            if (Input.GetKeyDown(KeyCode.D))
         {
             anim.SetTrigger("Right");
             anim.ResetTrigger("Left");
@@ -98,6 +116,7 @@ public class PacStudentController : MonoBehaviour
         CharacterPostion();
        
         FootstepAudio();
+        //ParticleManagement();
     }
 
    
@@ -152,35 +171,79 @@ public class PacStudentController : MonoBehaviour
 
         AudioSource footStepSource = gameObject.GetComponent<AudioSource>();
         ParticleSystem theAshParticles = gameObject.GetComponent<ParticleSystem>();
-        ParticleSystem extraCollisionParticles = GameObject.FindGameObjectWithTag("EditorOnly").GetComponent<ParticleSystem>();
+        
 
 
-        if (tempPosition.x - previousPosition.x > 0.05 || tempPosition.y - previousPosition.y > 0.05)
+        if (tempPosition.x - previousPosition.x > 0.1 || tempPosition.y - previousPosition.y > 0.1)
         {
+
+
+            theAshParticles.Play();
+            //extraCollisionParticles.Stop();
+            //Debug.Log("moving");
+
+
             if (!footStepSource.isPlaying)
             {
 
                 footStepSource.Play();
-                theAshParticles.Play();
-                extraCollisionParticles.Stop();
-                Debug.Log("moving");
+                
 
             }
 
         }
 
-        else if (tempPosition.x - previousPosition.x < 0.05 || tempPosition.y - previousPosition.y < 0.05)
+        else if (tempPosition.x - previousPosition.x < 0.1 && tempPosition.y - previousPosition.y < 0.1)
         {
+
+            theAshParticles.Stop();
+            //extraCollisionParticles.Emit(500);
+           // Debug.Log("not moving");
+
+
             if (footStepSource.isPlaying)
             {
                 footStepSource.Stop();
-                theAshParticles.Stop();
-                extraCollisionParticles.Emit(500);
-                Debug.Log("not moving");
+                
 
             }
 
         }
+        
+       
+    }
+
+
+    void ParticleManagement()
+    {
+        ParticleSystem extraCollisionParticles = GameObject.FindGameObjectWithTag("EditorOnly").GetComponent<ParticleSystem>();
+        AudioSource collosionSound = GameObject.FindGameObjectWithTag("EditorOnly").GetComponent<AudioSource>();
+
+
+        if (tempPosition.x - previousPosition.x < 0.00000001 && tempPosition.y - previousPosition.y < 0.00000001)
+        {
+
+            extraCollisionParticles.Emit(500);
+            Debug.Log("start collision emition");
+
+            if (!collosionSound.isPlaying)
+            {
+
+                collosionSound.Play();
+
+
+            }
+            
+
+        }
+
+        //else //if (tempPosition.x - previousPosition.x >= 0.00001 || tempPosition.y - previousPosition.y >= 0.00001)
+       // {
+
+            //extraCollisionParticles.Stop();
+            //Debug.Log("stop collision emition");
+            //collosionSound();
+       // }
 
     }
 
