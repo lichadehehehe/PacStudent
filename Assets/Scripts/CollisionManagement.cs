@@ -22,7 +22,7 @@ public class CollisionManagement : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Impassable"))
         {
-            Debug.Log("911");
+            //Debug.Log("911");
             ParticleSystem extraCollisionParticles = gameObject.GetComponent<ParticleSystem>();
             AudioSource collosionSound = gameObject.GetComponent<AudioSource>();
 

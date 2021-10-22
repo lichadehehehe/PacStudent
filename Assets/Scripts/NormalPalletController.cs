@@ -22,19 +22,13 @@ public class NormalPalletController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Eaten");
-            //ParticleSystem extraCollisionParticles = gameObject.GetComponent<ParticleSystem>();
-            //AudioSource collosionSound = gameObject.GetComponent<AudioSource>();
-
-            //extraCollisionParticles.Emit(500);
-
-            //collosionSound.Play();
+            //Debug.Log("Eaten");
+         
             int count = int.Parse(GameObject.FindGameObjectWithTag("Score").GetComponent<UnityEngine.UI.Text>().text);
             count ++;
             string countString = count.ToString();
 
             GameObject.FindGameObjectWithTag("Score").GetComponent<UnityEngine.UI.Text>().text = countString;
-
 
 
 

@@ -22,6 +22,7 @@ TagManager:
   - Lives
   - Explosion
   - ExplosionParticle
+  - OneDead
   layers:
   - Default
   - TransparentFX
