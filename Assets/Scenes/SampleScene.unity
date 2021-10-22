@@ -8712,6 +8712,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 1.5
   footStepSource: {fileID: 0}
+  isInputEnabled: 1
 --- !u!54 &126309293
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -42492,7 +42493,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: fba18a097f38d9b4dab0f09a529a4ff3, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.417
+  m_Volume: 0.342
   m_Pitch: 1
   Loop: 0
   Mute: 0

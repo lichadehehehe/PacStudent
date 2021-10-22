@@ -22,38 +22,18 @@ public class GhostController : MonoBehaviour
         if (other.gameObject.CompareTag("Player") && gameObject.GetComponent<Animator>().GetBool("Scared") == false)
         {
             Debug.Log("playerNuked");
-
+            gameObject.GetComponent<BoxCollider>().enabled = false;
+            GameObject.FindGameObjectWithTag("Player").GetComponent<BoxCollider>().enabled = false;
             GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>().SetTrigger("Dead");
             GameObject.FindGameObjectWithTag("ExplosionParticle").GetComponent<ParticleSystem>().Emit(1000);
-            //GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>().velocity = Vector3.zero;
+          
             GameObject.FindGameObjectWithTag("Explosion").GetComponent<AudioSource>().Play();
             GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>().Stop();
             
-            //ParticleSystem extraCollisionParticles = gameObject.GetComponent<ParticleSystem>();
-            //AudioSource collosionSound = gameObject.GetComponent<AudioSource>();
-
-            //extraCollisionParticles.Emit(500);
-
-            //collosionSound.Play();
-            //int count = int.Parse(GameObject.FindGameObjectWithTag("Score").GetComponent<UnityEngine.UI.Text>().text);
-            // count++;
-            //string countString = count.ToString();
-
-            //GameObject.FindGameObjectWithTag("Enemy").GetComponent<Animator>().SetTrigger("Scared");
-            //GameObject.FindGameObjectWithTag("RedEnemy").GetComponent<Animator>().SetTrigger("Scared");
-            // GameObject.FindGameObjectWithTag("GreenEnemy").GetComponent<Animator>().SetTrigger("Scared");
-            // GameObject.FindGameObjectWithTag("BlueEnemy").GetComponent<Animator>().SetTrigger("Scared");
+          
 
             StartCoroutine(myCouroutine());
 
-
-
-            //GameObject.FindGameObjectWithTag("LevelUpBGM").GetComponent<AudioSource>().Play();
-
-            //GameObject.FindGameObjectWithTag("ScaredBGM").GetComponent<AudioSource>().Play();
-
-
-            // gameObject.transform.position = new Vector3(999, 999, 999);
 
         }
 
@@ -76,6 +56,8 @@ public class GhostController : MonoBehaviour
         GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>().SetTrigger("Left");
         GameObject.FindGameObjectWithTag("Player").GetComponent<PacStudentController>().isInputEnabled = true;
         GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>().Play();
+        gameObject.GetComponent<BoxCollider>().enabled = true;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<BoxCollider>().enabled = true;
 
     }
 }
