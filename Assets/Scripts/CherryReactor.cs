@@ -36,7 +36,7 @@ public class CherryReactor : MonoBehaviour
 
 
 
-            GameObject.FindGameObjectWithTag("Finish").active = false;
+            gameObject.active = false;
 
         }
     }

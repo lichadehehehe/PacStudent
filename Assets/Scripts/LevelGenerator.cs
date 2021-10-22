@@ -8,7 +8,7 @@ public class LevelGenerator : MonoBehaviour
     // Start is called before the first frame update
 
     // declare the map array
-
+    public bool isCountingDown = false;
 
     public int[,] levelMap =
  {
@@ -28,9 +28,16 @@ public class LevelGenerator : MonoBehaviour
  {2,2,2,2,2,1,5,3,3,0,4,0,0,0},
  {0,0,0,0,0,0,5,0,0,0,4,0,0,0},
  };
-    
-   
 
+
+    void Awake()
+    {
+
+        GameObject.FindGameObjectWithTag("ICBMCountdown").GetComponent<UnityEngine.UI.Text>().enabled = false;
+
+
+
+    }
     void Start()
     {
         //disable all manual map assets

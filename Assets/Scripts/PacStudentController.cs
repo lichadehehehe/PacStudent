@@ -25,6 +25,10 @@ public class PacStudentController : MonoBehaviour
     Vector3 previousPosition;
 
     ParticleSystem theAshParticles;
+
+    public bool isInputEnabled = true;
+
+
     void Awake()
     {
         int[,] levelMap = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<LevelGenerator>().levelMap;
@@ -71,7 +75,7 @@ public class PacStudentController : MonoBehaviour
 
         }
 
-            if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.D) && isInputEnabled)
         {
             anim.SetTrigger("Right");
             anim.ResetTrigger("Left");
@@ -81,7 +85,7 @@ public class PacStudentController : MonoBehaviour
 
 
 
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.A) && isInputEnabled)
         {
             anim.SetTrigger("Left");
             anim.ResetTrigger("Right");
@@ -91,7 +95,7 @@ public class PacStudentController : MonoBehaviour
 
 
 
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.S) && isInputEnabled)
         {
             anim.SetTrigger("Down");
             anim.ResetTrigger("Right");
@@ -101,7 +105,7 @@ public class PacStudentController : MonoBehaviour
 
 
 
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.W) && isInputEnabled)
         {
             anim.SetTrigger("Up");
             anim.ResetTrigger("Right");
@@ -125,7 +129,7 @@ public class PacStudentController : MonoBehaviour
     {
        
 
-        if (Input.GetAxis("Horizontal") > 0)
+        if (Input.GetAxis("Horizontal") > 0 && isInputEnabled)
         {
 
             movement.x++;
@@ -133,14 +137,14 @@ public class PacStudentController : MonoBehaviour
 
         }
 
-        if (Input.GetAxis("Horizontal") < 0)
+        if (Input.GetAxis("Horizontal") < 0 && isInputEnabled)
         {
             movement.x--;
 
 
         }
 
-        if (Input.GetAxis("Vertical") > 0)
+        if (Input.GetAxis("Vertical") > 0 && isInputEnabled)
         {
 
             movement.y++;
@@ -148,7 +152,7 @@ public class PacStudentController : MonoBehaviour
 
         }
 
-        if (Input.GetAxis("Vertical") < 0)
+        if (Input.GetAxis("Vertical") < 0 && isInputEnabled)
         {
             movement.y--;
 

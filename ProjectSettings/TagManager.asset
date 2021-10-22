@@ -9,6 +9,19 @@ TagManager:
   - LevelManager
   - Impassable
   - Score
+  - Enemy
+  - BGM
+  - LevelUpBGM
+  - ScaredBGM
+  - RedEnemy
+  - GreenEnemy
+  - BlueEnemy
+  - ICBMCountdown
+  - LoveLiveROC
+  - Tagging
+  - Lives
+  - Explosion
+  - ExplosionParticle
   layers:
   - Default
   - TransparentFX
