@@ -41,10 +41,10 @@ public class CherryController : MonoBehaviour
 
     IEnumerator MyCoroutine()
     {
-    
+        yield return new WaitForSecondsRealtime(5f);
     marker:
 
-
+        
         GameObject cherry = (GameObject)Instantiate(Resources.Load("AmericanOil"));
         
         int[,] levelMap = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<LevelGenerator>().levelMap;
@@ -55,16 +55,7 @@ public class CherryController : MonoBehaviour
 
 
         yield return new WaitForSecondsRealtime(20f);
-        //Instantiate(cherry, new Vector3(initialX + Random.Range(0, Screen.width), initialY + Random.Range(0, Screen.height), 0), Quaternion.identity);
-
-        //cherry.transform.position = new Vector3(Random.Range(0, Screen.width), Random.Range(0, Screen.height), 0);
-
-       // tweener.AddTween(cherry.transform, new Vector3(Random.Range(0, Screen.width), Random.Range(0, Screen.height), 0 ), throughCenterScreenTilEndPoint, 1.5f);
-
-        //cherry.transform.position =
-             //Vector3.MoveTowards(cherry.transform.position, throughCenterScreenTilEndPoint, 2.0f * Time.deltaTime);
-
-        //yield return new WaitForSecondsRealtime(5f);
+        
 
         goto marker;
 

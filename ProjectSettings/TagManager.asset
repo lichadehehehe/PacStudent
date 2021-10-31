@@ -23,6 +23,7 @@ TagManager:
   - Explosion
   - ExplosionParticle
   - OneDead
+  - theTimer
   layers:
   - Default
   - TransparentFX

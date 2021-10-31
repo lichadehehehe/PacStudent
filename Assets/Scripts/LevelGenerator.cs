@@ -34,8 +34,8 @@ public class LevelGenerator : MonoBehaviour
     {
 
         GameObject.FindGameObjectWithTag("ICBMCountdown").GetComponent<UnityEngine.UI.Text>().enabled = false;
-
-
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PacStudentController>().enabled = false;
+        StartCoroutine(MyCoroutine());
 
     }
     void Start()
@@ -163,9 +163,25 @@ public class LevelGenerator : MonoBehaviour
         
     }
 
-    public int[,] getNumArray()
+    IEnumerator MyCoroutine()
     {
-        return (int[,])levelMap.Clone();
+
+        GameObject.FindGameObjectWithTag("theTimer").GetComponent<UnityEngine.UI.Text>().text = "3";
+        yield return new WaitForSeconds(1f);
+        GameObject.FindGameObjectWithTag("theTimer").GetComponent<UnityEngine.UI.Text>().text = "2";
+        yield return new WaitForSeconds(1f);
+        GameObject.FindGameObjectWithTag("theTimer").GetComponent<UnityEngine.UI.Text>().text = "1";
+        yield return new WaitForSeconds(1f);
+        GameObject.FindGameObjectWithTag("theTimer").GetComponent<UnityEngine.UI.Text>().text = "GO!";
+        yield return new WaitForSeconds(1f);
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PacStudentController>().enabled = true;
+        GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>().Play();
+        
+
+
+
     }
+
+
 
 }

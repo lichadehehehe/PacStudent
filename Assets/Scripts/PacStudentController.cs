@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -53,6 +54,10 @@ public class PacStudentController : MonoBehaviour
 
     void Update()
     {
+        //TimeSpan ts = TimeSpan.FromMilliseconds(Time.deltaTime*1000);
+        GameObject.FindGameObjectWithTag("theTimer").GetComponent<UnityEngine.UI.Text>().text = FormatTime(Time.time - 4f).ToString();
+
+
         Animator anim = gameObject.GetComponent<Animator>();
         int[,] levelMap = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<LevelGenerator>().levelMap;
         if (gameObject.transform.position.x < -5.456f)
@@ -266,6 +271,18 @@ public class PacStudentController : MonoBehaviour
 
         goto marker;
 
+    }
+
+
+    string FormatTime(float time)
+    {
+        int intTime = (int)time;
+        int minutes = intTime / 60;
+        int seconds = intTime % 60;
+        float fraction = time * 1000;
+        fraction = (fraction % 1000);
+        string timeText = String.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, fraction);
+        return timeText;
     }
 }
 
