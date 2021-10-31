@@ -24,6 +24,11 @@ TagManager:
   - ExplosionParticle
   - OneDead
   - theTimer
+  - coin
+  - highScore
+  - highTime
+  - Win
+  - Lose
   layers:
   - Default
   - TransparentFX

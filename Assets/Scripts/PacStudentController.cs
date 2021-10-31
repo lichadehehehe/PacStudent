@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 public class PacStudentController : MonoBehaviour
 {
@@ -29,6 +29,8 @@ public class PacStudentController : MonoBehaviour
 
     public bool isInputEnabled = true;
 
+    bool gameOver = false;
+
 
     void Awake()
     {
@@ -54,8 +56,8 @@ public class PacStudentController : MonoBehaviour
 
     void Update()
     {
-        //TimeSpan ts = TimeSpan.FromMilliseconds(Time.deltaTime*1000);
-        GameObject.FindGameObjectWithTag("theTimer").GetComponent<UnityEngine.UI.Text>().text = FormatTime(Time.time - 4f).ToString();
+        if (!gameOver)
+        GameObject.FindGameObjectWithTag("theTimer").GetComponent<UnityEngine.UI.Text>().text = FormatTime(Time.timeSinceLevelLoad - 4f).ToString();
 
 
         Animator anim = gameObject.GetComponent<Animator>();
@@ -124,8 +126,39 @@ public class PacStudentController : MonoBehaviour
         GetMovementVector();
         CharacterPostion();
        
+
+
+        if (!gameOver)
         FootstepAudio();
-        //ParticleManagement();
+        
+
+        if (GameObject.FindGameObjectWithTag("Lives").GetComponent<UnityEngine.UI.Text>().text == "0" ||
+            GameObject.FindGameObjectWithTag("theTimer").GetComponent<UnityEngine.UI.Text>().text == "99:99:99" ||
+            (GameObject.FindGameObjectsWithTag("coin").Length == 1 && GameObject.FindGameObjectsWithTag("LoveLiveROC").Length == 1))
+        {
+
+            if (!gameOver)
+            {
+
+                StartCoroutine(GameOverCoroutine());
+                
+
+               
+                gameOver = true;
+
+            }
+
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+
+
+                SceneManager.LoadSceneAsync("StartScene", LoadSceneMode.Single);
+
+
+            }
+        }
+
+
     }
 
    
@@ -223,38 +256,7 @@ public class PacStudentController : MonoBehaviour
     }
 
 
-    void ParticleManagement()
-    {
-        ParticleSystem extraCollisionParticles = GameObject.FindGameObjectWithTag("EditorOnly").GetComponent<ParticleSystem>();
-        AudioSource collosionSound = GameObject.FindGameObjectWithTag("EditorOnly").GetComponent<AudioSource>();
-
-
-        if (tempPosition.x - previousPosition.x < 0.00000001 && tempPosition.y - previousPosition.y < 0.00000001)
-        {
-
-            extraCollisionParticles.Emit(500);
-            Debug.Log("start collision emition");
-
-            if (!collosionSound.isPlaying)
-            {
-
-                collosionSound.Play();
-
-
-            }
-            
-
-        }
-
-        //else //if (tempPosition.x - previousPosition.x >= 0.00001 || tempPosition.y - previousPosition.y >= 0.00001)
-       // {
-
-            //extraCollisionParticles.Stop();
-            //Debug.Log("stop collision emition");
-            //collosionSound();
-       // }
-
-    }
+    
 
     IEnumerator MyCoroutine()
     {
@@ -283,6 +285,52 @@ public class PacStudentController : MonoBehaviour
         fraction = (fraction % 1000);
         string timeText = String.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, fraction);
         return timeText;
+    }
+
+    IEnumerator GameOverCoroutine()
+    {
+
+        GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>().enabled = false;
+        GameObject.FindGameObjectWithTag("ScaredBGM").GetComponent<AudioSource>().enabled = false;
+        //GameObject.FindGameObjectWithTag("Score").GetComponent<UnityEngine.UI.Text>().text = "Press enter for main menu";
+
+        //GameObject.FindGameObjectWithTag("Lose").GetComponent<AudioSource>().Play();
+
+
+        if (GameObject.FindGameObjectWithTag("Lives").GetComponent<UnityEngine.UI.Text>().text == "0")
+        {
+            GameObject.FindGameObjectWithTag("theTimer").GetComponent<UnityEngine.UI.Text>().text = "Mission Failed";
+            GameObject.FindGameObjectWithTag("Lose").GetComponent<AudioSource>().Play();
+
+            //Debug.Log(GameObject.FindGameObjectWithTag("Lose"));
+
+
+        }
+
+
+        else
+        {
+            GameObject.FindGameObjectWithTag("theTimer").GetComponent<UnityEngine.UI.Text>().text = "Mission Accomplished";
+            GameObject.FindGameObjectWithTag("Win").GetComponent<AudioSource>().Play();
+
+
+        }
+        GameObject.FindGameObjectWithTag("Player").GetComponent<SpriteRenderer>().enabled = false;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>().enabled = false;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<AudioSource>().enabled = false;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<BoxCollider>().enabled = false;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<ParticleSystem>().Stop();
+        GameObject.FindGameObjectWithTag("EditorOnly").active = false;
+        GameObject.FindGameObjectWithTag("ExplosionParticle").active = false;
+
+        
+
+
+        yield return null;
+        // SceneManager.LoadSceneAsync("StartScene", LoadSceneMode.Single);
+
+
+
     }
 }
 
