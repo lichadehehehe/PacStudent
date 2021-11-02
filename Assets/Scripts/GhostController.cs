@@ -36,20 +36,37 @@ public class GhostController : MonoBehaviour
 
 
         transform.rotation = Quaternion.identity;
+        
+
+
         if (GameObject.FindGameObjectWithTag("MainCamera").GetComponent<LevelGenerator>().gameStart)
         {
 
             if (gameObject.GetComponent<Animator>().GetBool("Scared") == false)
             {
                 ChasePlayer();
+                GameObject[] ghostTags = GameObject.FindGameObjectsWithTag("UI");
 
+                foreach (GameObject i in ghostTags)
+                {
+                    i.transform.rotation = Quaternion.identity;
+
+
+                }
             }
 
             else if (gameObject.GetComponent<Animator>().GetBool("Scared") == true)
             {
 
                 AvoidPlayer();
+                GameObject[] ghostTags = GameObject.FindGameObjectsWithTag("UI");
 
+                foreach (GameObject i in ghostTags)
+                {
+                    i.transform.rotation = Quaternion.identity;
+
+
+                }
 
             }
 
@@ -145,153 +162,20 @@ public class GhostController : MonoBehaviour
 
     }
 
-    void GetMovementVector()
-    {
-        
-        // first ghost grey
-        if (gameObject.tag == "Enemy")
-        {
-            if (initialStatus)
-            movement.y++;
-
-            /*
-            void OnTriggerEnter(Collider other)
-            {
-                if (other.gameObject.CompareTag("Impassable") && gameObject.GetComponent<Animator>().GetBool("Scared") == false) ;
-
-            }
-
-            */
-            
-            if (GameObject.FindGameObjectWithTag("GreyFront").GetComponent<HitDetecter>().hit == true)
-            {
-                initialStatus = false;
-
-                if (GameObject.FindGameObjectWithTag("GreyLeft").GetComponent<HitDetecter>().hit == true)
-                {
-
-                    gameObject.transform.Rotate(0.0f, 0.0f, 270.0f, Space.Self);
-                    Debug.Log("Lefthit");
-                    movement.x--;
-
-
-                }
-
-                if (GameObject.FindGameObjectWithTag("GreyRight").GetComponent<HitDetecter>().hit == true)
-                {
-
-                    gameObject.transform.Rotate(0.0f, 0.0f, 90.0f, Space.Self);
-                    Debug.Log("Righthit");
-                    movement.x++;
-
-                }
-
-                if (GameObject.FindGameObjectWithTag("GreyLeft").GetComponent<HitDetecter>().hit == true && 
-                    GameObject.FindGameObjectWithTag("GreyRight").GetComponent<HitDetecter>().hit == true)
-                {
-
-                    gameObject.transform.Rotate(0.0f, 0.0f, 180.0f, Space.Self);
-                    Debug.Log("BothHit");
-                    movement.y--;
-                }
-
-                else
-                {
-                    
-                    int caseNumber = Random.Range(1, 3);
-                    Debug.Log("BothHit");
-
-                    if (caseNumber == 1)
-                    {
-
-                        gameObject.transform.Rotate(0.0f, 0.0f, 90.0f, Space.Self);
-
-                        Debug.Log("RandomLeft");
-                        movement.x--;
-
-                    }
-
-                    else
-                    {
-
-                        gameObject.transform.Rotate(0.0f, 0.0f, 270.0f, Space.Self);
-                        Debug.Log("RandomRight");
-                        movement.x++;
-                    }
-
-                }
-
-
-
-            }
-            
-
-
-        }
-
-        //second ghost red
-        if (gameObject.tag == "RedEnemy")
-        {
-
-
-            if (initialStatus)
-                movement.x--;
-
-
-        }
-
-        //third ghost green
-        if (gameObject.tag == "GreenEnemy")
-        {
-            if (initialStatus)
-                movement.y++;
-
-
-        }
-
-        //fourth ghost blue 
-        if (gameObject.tag == "BlueEnemy")
-        {
-            if (initialStatus)
-                movement.y--;
-
-
-        }
-        movement = Vector3.ClampMagnitude(movement, 1.0f);
-        movementSqrMagnitude = movement.sqrMagnitude;
-    }
-
-    /*
-    void CharacterPostion()
-    {
-
-        transform.Translate(movement * walkSpeed * Time.deltaTime, Space.World);
-
-    }
-    */
+    
 
     private void ChasePlayer()
     {
         agent.SetDestination(GameObject.FindGameObjectWithTag("Player").transform.position);
-        GameObject [] renderes = GameObject.FindGameObjectsWithTag("RocketRender");
+        
 
-        foreach (GameObject i in renderes)
-        {
-            //
-            //
-            //i.transform.LookAt(new Vector3(0, 0, GameObject.FindGameObjectWithTag("Player").transform.position.z));
-            //i.transform.rotation = new Vector3(0f, 0f, 8f);
-
-            float AngleRad = Mathf.Atan2(GameObject.FindGameObjectWithTag("Player").transform.position.y - i.transform.position.y, GameObject.FindGameObjectWithTag("Player").transform.position.x - i.transform.position.x);
+            float AngleRad = Mathf.Atan2(GameObject.FindGameObjectWithTag("Player").transform.position.y - gameObject.transform.position.y, GameObject.FindGameObjectWithTag("Player").transform.position.x - gameObject.transform.position.x);
             // Get Angle in Degrees
             float AngleDeg = (180 / Mathf.PI) * AngleRad;
             // Rotate Object
-            i.transform.rotation = Quaternion.Euler(0, 0, AngleDeg - 90);
+            gameObject.transform.rotation = Quaternion.Euler(0, 0, AngleDeg - 90);
 
-           // Debug.Log("rotate");
-
-
-        }
+          
         
     }
 
@@ -300,25 +184,15 @@ public class GhostController : MonoBehaviour
 
         agent.SetDestination(tempPosition);
 
-        GameObject[] renderes = GameObject.FindGameObjectsWithTag("RocketRender");
+        
 
-        foreach (GameObject i in renderes)
-        {
-            //
-            //
-            //i.transform.LookAt(new Vector3(0, 0, GameObject.FindGameObjectWithTag("Player").transform.position.z));
-            //i.transform.rotation = new Vector3(0f, 0f, 8f);
-
-            float AngleRad = Mathf.Atan2(tempPosition.y - i.transform.position.y, tempPosition.x - i.transform.position.x);
+            float AngleRad = Mathf.Atan2(tempPosition.y - gameObject.transform.position.y, tempPosition.x - gameObject.transform.position.x);
             // Get Angle in Degrees
             float AngleDeg = (180 / Mathf.PI) * AngleRad;
             // Rotate Object
-            i.transform.rotation = Quaternion.Euler(0, 0, AngleDeg - 90);
+            gameObject.transform.rotation = Quaternion.Euler(0, 0, AngleDeg - 90);
 
-           // Debug.Log("rotateHome");
-
-
-        }
+           
 
 
     }
