@@ -30,6 +30,8 @@ public class LevelGenerator : MonoBehaviour
  };
 
 
+    public bool gameStart = false;
+
     void Awake()
     {
 
@@ -176,9 +178,9 @@ public class LevelGenerator : MonoBehaviour
         yield return new WaitForSeconds(1f);
         GameObject.FindGameObjectWithTag("Player").GetComponent<PacStudentController>().enabled = true;
         GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>().Play();
-        
 
 
+        gameStart = true;
 
     }
 

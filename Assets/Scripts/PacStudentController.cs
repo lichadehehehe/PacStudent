@@ -327,6 +327,10 @@ public class PacStudentController : MonoBehaviour
 
 
         yield return null;
+
+        // i could have implemented the "wait for 3 seconds and went back to main menu function
+        // but i made a ending music at the gameover scene so i did not implement it
+        
         // SceneManager.LoadSceneAsync("StartScene", LoadSceneMode.Single);
 
 
