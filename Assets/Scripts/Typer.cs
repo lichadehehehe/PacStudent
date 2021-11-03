@@ -71,11 +71,14 @@ public class Typer : MonoBehaviour
         {
 
             Removeletter();
+            GameObject.FindGameObjectWithTag("Player").GetComponent<AudioSource>().Play();
 
             if (IsWordComplete())
             
             {
-                SetCurrentWord();
+                //SetCurrentWord();
+                gameObject.GetComponent<ParticleSystem>().Emit(100);
+                Destroy(wordOutput);
 
             }
 

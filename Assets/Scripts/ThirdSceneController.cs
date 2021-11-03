@@ -24,7 +24,7 @@ public class ThirdSceneController : MonoBehaviour
 
         GameObject missile1 = (GameObject)Instantiate(Resources.Load("GreyGhost"));
 
-        missile1.transform.position = new Vector3(0, 5.803f + 1, 0f);
+        missile1.transform.position = new Vector3(0, 5.803f, 0f);
         //missile1.GetComponent<Rigidbody>().AddForce( player.transform.position * 200f);
 
         yield return new WaitForSecondsRealtime(5f);
