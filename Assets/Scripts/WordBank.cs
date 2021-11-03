@@ -5,15 +5,9 @@ using System.Linq;
 
 public class WordBank : MonoBehaviour
 {
+    
 
-    private List<string> originalWords = new List<string>()
-    {
-
-        "xilang", "zhongshanba", "jiaokou"
-
-
-
-    };
+    List<string> originalWords = System.IO.File.ReadLines("Assets/Scripts/wordlist10000.txt").ToList();
 
     private List<string> workingWords = new List<string>();
 

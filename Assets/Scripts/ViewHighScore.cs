@@ -11,13 +11,18 @@ public class ViewHighScore : MonoBehaviour
     const string savedHighScoreKey = "savedHighScore";
 
     const string savedHighTimeKey = "savedHighTime";
+
+    const string secondHighTimeKey = "secondSavedHighTime";
     void Start()
     {
 
         int highScore = PlayerPrefs.GetInt(savedHighScoreKey, 0);
         float highTime = PlayerPrefs.GetFloat(savedHighTimeKey, 0f);
+        float secondHighTime = PlayerPrefs.GetFloat(secondHighTimeKey, 0f);
+
         GameObject.FindGameObjectWithTag("highScore").GetComponent<UnityEngine.UI.Text>().text = "High Score: " + highScore.ToString();
         GameObject.FindGameObjectWithTag("highTime").GetComponent<UnityEngine.UI.Text>().text = "Time: " + FormatTime(highTime);
+        GameObject.Find("SecondHighTime").GetComponent<UnityEngine.UI.Text>().text = "Time: " + FormatTime(secondHighTime);
     }
 
     // Update is called once per frame
