@@ -26,7 +26,7 @@ public class ThirdSceneController : MonoBehaviour
         {
 
             gameOver = true;
-            Debug.Log("GameOver");
+            //Debug.Log("GameOver");
             GameObject.FindGameObjectWithTag("EditorOnly").GetComponent<UnityEngine.UI.Text>().text = "Game Over \n Press Enter to retry. \n Press Esc for main menu.";
             
             if (Input.GetKeyDown(KeyCode.Return))
