@@ -37,6 +37,8 @@ TagManager:
   - GreyRight
   - RocketRender
   - UI
+  - Word
+  - GameWord
   layers:
   - Default
   - TransparentFX
