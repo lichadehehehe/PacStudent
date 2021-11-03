@@ -36,4 +36,13 @@ public class LoadScene : MonoBehaviour
 
 
     }
+
+    public void LoadSecondLevel()
+    
+    {
+        SceneManager.LoadSceneAsync("SecondScene", LoadSceneMode.Single);
+
+
+
+    }
 }
