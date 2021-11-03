@@ -38,6 +38,7 @@ public class LevelGenerator : MonoBehaviour
         GameObject.FindGameObjectWithTag("ICBMCountdown").GetComponent<UnityEngine.UI.Text>().enabled = false;
         GameObject.FindGameObjectWithTag("Player").GetComponent<PacStudentController>().enabled = false;
         StartCoroutine(MyCoroutine());
+        
 
     }
     void Start()
