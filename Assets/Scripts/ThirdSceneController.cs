@@ -13,6 +13,8 @@ public class ThirdSceneController : MonoBehaviour
 
     bool emitted = false;
 
+    bool defeatPlayed = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,7 +29,17 @@ public class ThirdSceneController : MonoBehaviour
 
             gameOver = true;
             //Debug.Log("GameOver");
-            GameObject.FindGameObjectWithTag("EditorOnly").GetComponent<UnityEngine.UI.Text>().text = "Game Over \n Press Enter to retry. \n Press Esc for main menu.";
+            GameObject.Find("Main Camera").GetComponent<AudioSource>().Stop();
+            if (!defeatPlayed)
+            {
+
+                GameObject.Find("defeatSound").GetComponent<AudioSource>().Play();
+                defeatPlayed = true;
+
+
+            }
+            
+            GameObject.Find("Text").GetComponent<UnityEngine.UI.Text>().text = "Game Over \n Press Enter to retry. \n Press Esc for main menu.";
             
             if (Input.GetKeyDown(KeyCode.Return))
             {

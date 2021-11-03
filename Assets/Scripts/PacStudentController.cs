@@ -320,7 +320,7 @@ public class PacStudentController : MonoBehaviour
         GameObject.FindGameObjectWithTag("Player").GetComponent<AudioSource>().enabled = false;
         GameObject.FindGameObjectWithTag("Player").GetComponent<BoxCollider>().enabled = false;
         GameObject.FindGameObjectWithTag("Player").GetComponent<ParticleSystem>().Stop();
-        GameObject.FindGameObjectWithTag("EditorOnly").active = false;
+        GameObject.Find("extraParticleController").active = false;
         GameObject.FindGameObjectWithTag("ExplosionParticle").active = false;
 
         

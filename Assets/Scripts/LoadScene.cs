@@ -45,4 +45,12 @@ public class LoadScene : MonoBehaviour
 
 
     }
+
+    public void ExitApplication()
+    {
+
+        Application.Quit();
+
+
+    }
 }

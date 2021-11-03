@@ -21,7 +21,7 @@ public class SecondSaveGameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameObject.FindGameObjectWithTag("EditorOnly").GetComponent<UnityEngine.UI.Text>().text == "Game Over \n Press Enter to retry. \n Press Esc for main menu.")
+        if (GameObject.Find("Text").GetComponent<UnityEngine.UI.Text>().text == "Game Over \n Press Enter to retry. \n Press Esc for main menu.")
         {
             if (!gameSaved)
             {
