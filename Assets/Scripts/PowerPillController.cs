@@ -5,101 +5,89 @@ using UnityEngine;
 public class PowerPillController : MonoBehaviour
 {
 
-    //public AudioClip scaredClip;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private void OnTriggerEnter(Collider other)
+    {   
+        //if the player eat the power pallet
+        if (other.gameObject.CompareTag("Player"))
+        {
+            
+            //set all the enemies into the scared state
+            GameObject.FindGameObjectWithTag("Enemy").GetComponent<Animator>().SetBool("Scared", true);
+            GameObject.FindGameObjectWithTag("RedEnemy").GetComponent<Animator>().SetBool("Scared", true);
+            GameObject.FindGameObjectWithTag("GreenEnemy").GetComponent<Animator>().SetBool("Scared", true);
+            GameObject.FindGameObjectWithTag("BlueEnemy").GetComponent<Animator>().SetBool("Scared", true);
 
-    // Update is called once per frame
-    void Update()
-    {
+            //start the coroutine
+            StartCoroutine(myCouroutine());
 
+
+            //play the levelup and scared bgm
+            //scared bgm is the Reclaim the Mainland
+            GameObject.FindGameObjectWithTag("LevelUpBGM").GetComponent<AudioSource>().Play();
+            GameObject.FindGameObjectWithTag("ScaredBGM").GetComponent<AudioSource>().Play();
+
+            //make the powerpallet disapear away from game view
+            gameObject.transform.position = new Vector3 (999,999,999);
+
+        }
     }
 
 
     IEnumerator myCouroutine()
-    {
-            GameObject[] taggedPalletGameObject = GameObject.FindGameObjectsWithTag("Tagging");
+    {   
+        //the follwing code is to avoid more than one "scare state ghost" function is called
+        //powerpallet function is enabled one at a time
+        //if a powerpallet is eaten while another powerpallet eaten less than 10 seconds before, the function will be reset 
+        GameObject[] taggedPalletGameObject = GameObject.FindGameObjectsWithTag("Tagging");
 
-        foreach(GameObject tagged in taggedPalletGameObject)
+        foreach (GameObject tagged in taggedPalletGameObject)
         {
-
 
             tagged.SetActive(false);
 
         }
 
 
-            gameObject.tag = "Tagging";
-    
+        gameObject.tag = "Tagging";
+
+        //stop the BGM
         GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>().Stop();
-            GameObject.FindGameObjectWithTag("ICBMCountdown").GetComponent<UnityEngine.UI.Text>().enabled = true;
-            GameObject.FindGameObjectWithTag("ICBMCountdown").GetComponent<UnityEngine.UI.Text>().text = "10";
-            yield return new WaitForSecondsRealtime(1f);
-            GameObject.FindGameObjectWithTag("ICBMCountdown").GetComponent<UnityEngine.UI.Text>().text = "9";
-            yield return new WaitForSecondsRealtime(1f);
-            GameObject.FindGameObjectWithTag("ICBMCountdown").GetComponent<UnityEngine.UI.Text>().text = "8";
-            yield return new WaitForSecondsRealtime(1f);
-            GameObject.FindGameObjectWithTag("ICBMCountdown").GetComponent<UnityEngine.UI.Text>().text = "7";
-            yield return new WaitForSecondsRealtime(1f);
-            GameObject.FindGameObjectWithTag("ICBMCountdown").GetComponent<UnityEngine.UI.Text>().text = "6";
-            yield return new WaitForSecondsRealtime(1f);
-            GameObject.FindGameObjectWithTag("ICBMCountdown").GetComponent<UnityEngine.UI.Text>().text = "5";
-            yield return new WaitForSecondsRealtime(1f);
-            GameObject.FindGameObjectWithTag("ICBMCountdown").GetComponent<UnityEngine.UI.Text>().text = "4";
-            yield return new WaitForSecondsRealtime(1f);
-            GameObject.FindGameObjectWithTag("ICBMCountdown").GetComponent<UnityEngine.UI.Text>().text = "3";
-            yield return new WaitForSecondsRealtime(1f);
-            GameObject.FindGameObjectWithTag("ICBMCountdown").GetComponent<UnityEngine.UI.Text>().text = "2";
-            yield return new WaitForSecondsRealtime(1f);
-            GameObject.FindGameObjectWithTag("ICBMCountdown").GetComponent<UnityEngine.UI.Text>().text = "1";
-            yield return new WaitForSecondsRealtime(1f); 
+
+        //enabled the countdown and count from 10 to 0
+        GameObject.FindGameObjectWithTag("ICBMCountdown").GetComponent<UnityEngine.UI.Text>().enabled = true;
+        GameObject.FindGameObjectWithTag("ICBMCountdown").GetComponent<UnityEngine.UI.Text>().text = "10";
+        yield return new WaitForSecondsRealtime(1f);
+        GameObject.FindGameObjectWithTag("ICBMCountdown").GetComponent<UnityEngine.UI.Text>().text = "9";
+        yield return new WaitForSecondsRealtime(1f);
+        GameObject.FindGameObjectWithTag("ICBMCountdown").GetComponent<UnityEngine.UI.Text>().text = "8";
+        yield return new WaitForSecondsRealtime(1f);
+        GameObject.FindGameObjectWithTag("ICBMCountdown").GetComponent<UnityEngine.UI.Text>().text = "7";
+        yield return new WaitForSecondsRealtime(1f);
+        GameObject.FindGameObjectWithTag("ICBMCountdown").GetComponent<UnityEngine.UI.Text>().text = "6";
+        yield return new WaitForSecondsRealtime(1f);
+        GameObject.FindGameObjectWithTag("ICBMCountdown").GetComponent<UnityEngine.UI.Text>().text = "5";
+        yield return new WaitForSecondsRealtime(1f);
+        GameObject.FindGameObjectWithTag("ICBMCountdown").GetComponent<UnityEngine.UI.Text>().text = "4";
+        yield return new WaitForSecondsRealtime(1f);
+        GameObject.FindGameObjectWithTag("ICBMCountdown").GetComponent<UnityEngine.UI.Text>().text = "3";
+        yield return new WaitForSecondsRealtime(1f);
+        GameObject.FindGameObjectWithTag("ICBMCountdown").GetComponent<UnityEngine.UI.Text>().text = "2";
+        yield return new WaitForSecondsRealtime(1f);
+        GameObject.FindGameObjectWithTag("ICBMCountdown").GetComponent<UnityEngine.UI.Text>().text = "1";
+        yield return new WaitForSecondsRealtime(1f);
+
+        //resume all the ghosts to the normal state
         GameObject.FindGameObjectWithTag("Enemy").GetComponent<Animator>().SetBool("Scared", false);
         GameObject.FindGameObjectWithTag("RedEnemy").GetComponent<Animator>().SetBool("Scared", false);
         GameObject.FindGameObjectWithTag("GreenEnemy").GetComponent<Animator>().SetBool("Scared", false);
         GameObject.FindGameObjectWithTag("BlueEnemy").GetComponent<Animator>().SetBool("Scared", false);
+
+        //disable countdown ui.text
         GameObject.FindGameObjectWithTag("ICBMCountdown").GetComponent<UnityEngine.UI.Text>().enabled = false;
-            GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>().Play();
 
-        
-
-
-
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            Debug.Log("EatenScared");
-            //ParticleSystem extraCollisionParticles = gameObject.GetComponent<ParticleSystem>();
-            //AudioSource collosionSound = gameObject.GetComponent<AudioSource>();
-
-            //extraCollisionParticles.Emit(500);
-
-            //collosionSound.Play();
-            //int count = int.Parse(GameObject.FindGameObjectWithTag("Score").GetComponent<UnityEngine.UI.Text>().text);
-            // count++;
-            //string countString = count.ToString();
-
-            GameObject.FindGameObjectWithTag("Enemy").GetComponent<Animator>().SetBool("Scared", true);
-            GameObject.FindGameObjectWithTag("RedEnemy").GetComponent<Animator>().SetBool("Scared", true);
-            GameObject.FindGameObjectWithTag("GreenEnemy").GetComponent<Animator>().SetBool("Scared", true);
-            GameObject.FindGameObjectWithTag("BlueEnemy").GetComponent<Animator>().SetBool("Scared", true);
-
-            StartCoroutine(myCouroutine());
+        //resume the bgm
+        GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>().Play();
 
 
-
-            GameObject.FindGameObjectWithTag("LevelUpBGM").GetComponent<AudioSource>().Play();
-
-            GameObject.FindGameObjectWithTag("ScaredBGM").GetComponent<AudioSource>().Play();
-
-
-            gameObject.transform.position = new Vector3 (999,999,999);
-
-        }
     }
 }

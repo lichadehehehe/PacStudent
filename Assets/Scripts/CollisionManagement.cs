@@ -4,30 +4,20 @@ using UnityEngine;
 
 public class CollisionManagement : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-
+    
 
     private void OnTriggerEnter(Collider other)
-    {
+    {   
+        // if the collision detecter collides with the wall
         if (other.gameObject.CompareTag("Impassable"))
         {
-            //Debug.Log("911");
+            //get the collision gameobject's particle system
             ParticleSystem extraCollisionParticles = gameObject.GetComponent<ParticleSystem>();
+            //get the colllision sound
             AudioSource collosionSound = gameObject.GetComponent<AudioSource>();
-
+            //emit the collision particles
             extraCollisionParticles.Emit(500);
-
+            //play the collision sound
             collosionSound.Play();
 
         }

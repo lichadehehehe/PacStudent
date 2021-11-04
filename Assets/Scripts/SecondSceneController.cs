@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class SecondSceneController : MonoBehaviour
 {
-    // Start is called before the first frame update
+    
 
     string[] textMessage = { "Breaking news: " ,
      "BALLISTIC MISSILE THREAT INBOUND.", "All units, ready to engage.", "Fire at will, THIS IS NOT A DRILL."};
@@ -13,26 +13,13 @@ public class SecondSceneController : MonoBehaviour
     int messageNumber = 0;
 
 
-    void Awake()
-    {
-        
-       
-    }
-    void Start()
-
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
-    {
-
-        GameObject.FindGameObjectWithTag("GameWord").GetComponent<UnityEngine.UI.Text>().text = textMessage[messageNumber];
-       
+    {   
+        //if enter key is pressed
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            
+            //while messagenumber less or equal to 3, inrement the messagenumber
             if (messageNumber <= 3)
             {
 
@@ -40,17 +27,21 @@ public class SecondSceneController : MonoBehaviour
 
             }
 
-            
-            if (messageNumber > 3 )
+            //if meesagenumber greater than 3, load the level
+            if (messageNumber > 3)
             {
 
                 SceneManager.LoadSceneAsync("ThirdScene", LoadSceneMode.Single);
 
 
             }
-            
+
 
         }
+
+        //display the gametext
+        if (messageNumber <= 3)
+            GameObject.FindGameObjectWithTag("GameWord").GetComponent<UnityEngine.UI.Text>().text = textMessage[messageNumber];
 
     }
 

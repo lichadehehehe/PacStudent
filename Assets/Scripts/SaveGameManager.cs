@@ -10,28 +10,21 @@ public class SaveGameManager : MonoBehaviour
 
     public float highTime = 0;
    
-
+    //declare the highscore and hightime key string
     const string savedHighScoreKey = "savedHighScore";
 
     const string savedHighTimeKey = "savedHighTime";
 
-   
 
     bool gameSaved = false;
 
-    //string highScore;
-    //string highTime;
-
-    void Awake()
-    {
-        
-    }
+    
 
 
     void Start()
     {
 
-
+        //get the high score and high time from playerpref
         highScore = PlayerPrefs.GetInt(savedHighScoreKey, 0);
         highTime = PlayerPrefs.GetFloat(savedHighTimeKey, 0f);
 
@@ -41,21 +34,19 @@ public class SaveGameManager : MonoBehaviour
     void Update()
     {
 
-       
+        // if gameover
         if (GameObject.FindGameObjectWithTag("theTimer").GetComponent<UnityEngine.UI.Text>().text == "Mission Failed" ||
             GameObject.FindGameObjectWithTag("theTimer").GetComponent<UnityEngine.UI.Text>().text == "Mission Accomplished")
-        {
+        {   
+            //if game has not saved yet, do the savegame funtion
+            //the gameSaved bool is to avoid savescore function being called indefinately
             if (!gameSaved)
             {
 
                 SaveScore();
 
-                Debug.Log("score saved");
-
                 gameSaved = true;
             }
-
-           
 
         }
         
@@ -64,12 +55,14 @@ public class SaveGameManager : MonoBehaviour
     public void SaveScore()
     {
 
-        
+        //get the score by int.parse the ui.text of score gameobject
         int currentScore = int.Parse(GameObject.FindGameObjectWithTag("Score").GetComponent<UnityEngine.UI.Text>().text);
+        
+        //if currentscore is higher than the highscore, do the save
         if (currentScore > highScore)
         {
 
-            //PlayerPrefs.GetInt(savedHighScore) = currentScore;
+            
             PlayerPrefs.SetInt(savedHighScoreKey, currentScore);
             PlayerPrefs.Save();
 
@@ -79,20 +72,14 @@ public class SaveGameManager : MonoBehaviour
 
         }
 
+        //if the currentscore is same but time lower, also do the save
         if (currentScore == highScore && Time.timeSinceLevelLoad < highTime)
         {
-
-            //PlayerPrefs.GetInt(savedHighScore) = currentScore;
-            //PlayerPrefs.SetInt(savedHighScoreKey, currentScore);
-            //PlayerPrefs.Save();
 
             PlayerPrefs.SetFloat(savedHighTimeKey, Time.timeSinceLevelLoad);
             PlayerPrefs.Save();
 
-
         }
-
-
 
     }
 

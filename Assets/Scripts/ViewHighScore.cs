@@ -5,9 +5,8 @@ using UnityEngine;
 
 public class ViewHighScore : MonoBehaviour
 {
-    // Start is called before the first frame update
-
-
+    
+    //declare the playerpref keys
     const string savedHighScoreKey = "savedHighScore";
 
     const string savedHighTimeKey = "savedHighTime";
@@ -15,23 +14,17 @@ public class ViewHighScore : MonoBehaviour
     const string secondHighTimeKey = "secondSavedHighTime";
     void Start()
     {
-
+        //get the save playerpref values
         int highScore = PlayerPrefs.GetInt(savedHighScoreKey, 0);
         float highTime = PlayerPrefs.GetFloat(savedHighTimeKey, 0f);
         float secondHighTime = PlayerPrefs.GetFloat(secondHighTimeKey, 0f);
-
+        //display the palyerpref values
         GameObject.FindGameObjectWithTag("highScore").GetComponent<UnityEngine.UI.Text>().text = "High Score: " + highScore.ToString();
         GameObject.FindGameObjectWithTag("highTime").GetComponent<UnityEngine.UI.Text>().text = "Time: " + FormatTime(highTime);
         GameObject.Find("SecondHighTime").GetComponent<UnityEngine.UI.Text>().text = "Time: " + FormatTime(secondHighTime);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-
+    //the format time function to format flaot time value
     string FormatTime(float time)
     {
         int intTime = (int)time;

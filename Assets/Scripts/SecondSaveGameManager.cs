@@ -8,55 +8,46 @@ public class SecondSaveGameManager : MonoBehaviour
 
     public float highTime = 0;
 
+    //declare the save game key
     const string secondHighTimeKey = "secondSavedHighTime";
 
     bool gameSaved = false;
 
     void Start()
     {
-        
+        //get the playerpref value
         highTime = PlayerPrefs.GetFloat(secondHighTimeKey, 0f);
     }
 
-    // Update is called once per frame
+   
     void Update()
-    {
+    {   
+        //if gameover
         if (GameObject.Find("Text").GetComponent<UnityEngine.UI.Text>().text == "Game Over \n Press Enter to retry. \n Press Esc for main menu.")
-        {
+        {   
+
+            //save game
             if (!gameSaved)
             {
 
                 SaveScore();
 
-                Debug.Log("score saved");
-
                 gameSaved = true;
             }
-
-
 
         }
     }
 
     public void SaveScore()
     {
-
-
-
+        //if the surviving time is longer than the high time, save it 
         if (Time.timeSinceLevelLoad > highTime)
         {
-
-            //PlayerPrefs.GetInt(savedHighScore) = currentScore;
-            //PlayerPrefs.SetInt(savedHighScoreKey, currentScore);
-            //PlayerPrefs.Save();
 
             PlayerPrefs.SetFloat(secondHighTimeKey, Time.timeSinceLevelLoad);
             PlayerPrefs.Save();
 
-
         }
-
-
 
     }
 }

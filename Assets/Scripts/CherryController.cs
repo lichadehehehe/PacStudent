@@ -4,56 +4,29 @@ using UnityEngine;
 
 public class CherryController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    //GameObject cherry;
-
-    //float initialX = -5.456f;
-    //float initialY = 5.803f;
-
-    Vector3 upperLeftScreen = new Vector3(0, Screen.height, 0);
-    Vector3 upperRightScreen = new Vector3(Screen.width, Screen.height, 0);
-    Vector3 lowerLeftScreen = new Vector3(0, 0, 0);
-    Vector3 lowerRightScreen = new Vector3(Screen.width, 0, 0);
-    Vector3 throughCenterScreenTilEndPoint = new Vector3(Screen.width / 2 + 20 , Screen.height / 2 + 20 , 0);
-
-    private Tweener tweener;
-
-    void Awake()
-    {
-        
-
-    }
-
+    
 
     void Start()
     {
-        
-
-
+        // declare to start the coroutine in start()
         StartCoroutine(MyCoroutine());
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    
     IEnumerator MyCoroutine()
-    {
+    {   //wait for 5 seconds
         yield return new WaitForSecondsRealtime(5f);
     marker:
 
-        
+        //initiate the cherry
         GameObject cherry = (GameObject)Instantiate(Resources.Load("AmericanOil"));
         
         int[,] levelMap = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<LevelGenerator>().levelMap;
-
+        //randomly generate the cherry position based on the levelmap
         cherry.transform.position = new Vector3(Random.Range(-5.456f, -5.456f + levelMap.GetUpperBound(1) * 0.4f), 5.803f + 1, 0f);
 
-    
-
-
+        //wait for 20 seconds, then repeat by goto marker command
         yield return new WaitForSecondsRealtime(20f);
         
 

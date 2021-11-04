@@ -4,38 +4,21 @@ using UnityEngine;
 
 public class CherryReactor : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 
     private void OnTriggerEnter(Collider other)
-    {
+    {   
+        // if the cherry collides with the player gameobject
         if (other.gameObject.CompareTag("Player"))
-        {
-            Debug.Log("Eaten");
-            //ParticleSystem extraCollisionParticles = gameObject.GetComponent<ParticleSystem>();
-            //AudioSource collosionSound = gameObject.GetComponent<AudioSource>();
-
-            //extraCollisionParticles.Emit(500);
-
-            //collosionSound.Play();
+        {   
+            //get the current score by int.parse the text string from the score ui text gameobject 
             int count = int.Parse(GameObject.FindGameObjectWithTag("Score").GetComponent<UnityEngine.UI.Text>().text);
+            //add 100 points
             count = count + 100;
             string countString = count.ToString();
-
+            //update the score string
             GameObject.FindGameObjectWithTag("Score").GetComponent<UnityEngine.UI.Text>().text = countString;
-
-
-
-
+            //if the cherry is eaten, disabled the gameobject
             gameObject.active = false;
 
         }

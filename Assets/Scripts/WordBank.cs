@@ -6,23 +6,23 @@ using System.Linq;
 public class WordBank : MonoBehaviour
 {
     
-
+    //read txt file, append words into the word bank
     List<string> originalWords = System.IO.File.ReadLines("Assets/Scripts/wordlist10000.txt").ToList();
 
     private List<string> workingWords = new List<string>();
 
     private void Awake()
-    {
+    {   
+        //declare the range of the array list
         workingWords.AddRange(originalWords);
-        
+        //shuffle the working words arraylist to get random result
         Shuffle(workingWords);
+        //convert all words to lower case
         ConverToLower(workingWords);
-
-        
-        
 
     }
 
+    //shuffle words in the array list
     private void Shuffle(List<string> list)
     {
         for (int i = 0; i < list.Count; i++)
@@ -40,6 +40,7 @@ public class WordBank : MonoBehaviour
 
     }
 
+    //convert word to lower case
     private void ConverToLower(List<string> list)
     {
 
@@ -48,9 +49,7 @@ public class WordBank : MonoBehaviour
 
             list[i] = list[i].ToLower();
 
-
         }
-
 
     }
     

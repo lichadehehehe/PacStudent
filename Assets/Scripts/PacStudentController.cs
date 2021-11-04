@@ -55,13 +55,16 @@ public class PacStudentController : MonoBehaviour
 
 
     void Update()
-    {
+    {   
+        //if the gmae is not gameover yet, display timer back the time.timesincelevelload function
         if (!gameOver)
         GameObject.FindGameObjectWithTag("theTimer").GetComponent<UnityEngine.UI.Text>().text = FormatTime(Time.timeSinceLevelLoad - 4f).ToString();
 
 
         Animator anim = gameObject.GetComponent<Animator>();
         int[,] levelMap = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<LevelGenerator>().levelMap;
+
+        //if the pacstudent go through the teleporter
         if (gameObject.transform.position.x < -5.456f)
         {
             float originalY = gameObject.transform.position.y;
@@ -71,6 +74,7 @@ public class PacStudentController : MonoBehaviour
 
         }
 
+        //if the pacstudent go through the teleporter
         if (gameObject.transform.position.x > -5.456f + levelMap.GetUpperBound(0) * 0.4f * 2)
         {
 
@@ -79,9 +83,9 @@ public class PacStudentController : MonoBehaviour
             gameObject.transform.position = new Vector3(-5.456f, originalY, 0);
 
 
-
         }
 
+        // if D is prssed, set the pac animator to "right"
         if (Input.GetKeyDown(KeyCode.D) && isInputEnabled)
         {
             anim.SetTrigger("Right");
@@ -91,7 +95,7 @@ public class PacStudentController : MonoBehaviour
         }
 
 
-
+        //if A is pressed, set the pac animator to "left"
         if (Input.GetKeyDown(KeyCode.A) && isInputEnabled)
         {
             anim.SetTrigger("Left");
@@ -101,7 +105,7 @@ public class PacStudentController : MonoBehaviour
         }
 
 
-
+        //if the S is pressed, set the pac animator to "down"
         if (Input.GetKeyDown(KeyCode.S) && isInputEnabled)
         {
             anim.SetTrigger("Down");
@@ -111,7 +115,7 @@ public class PacStudentController : MonoBehaviour
         }
 
 
-
+        //if the w is pressed, set the pac animator to "up"
         if (Input.GetKeyDown(KeyCode.W) && isInputEnabled)
         {
             anim.SetTrigger("Up");
@@ -122,38 +126,35 @@ public class PacStudentController : MonoBehaviour
         }
 
 
-
+        //enabled the pac movement functions
         GetMovementVector();
         CharacterPostion();
        
 
-
+        //if the game is not over yet, play footstep audio
         if (!gameOver)
         FootstepAudio();
         
-
+        //if the pacstudent lives is zero, or timer exceeds 99:99:99, or all pallets are eaten, gameover
         if (GameObject.FindGameObjectWithTag("Lives").GetComponent<UnityEngine.UI.Text>().text == "0" ||
             GameObject.FindGameObjectWithTag("theTimer").GetComponent<UnityEngine.UI.Text>().text == "99:99:99" ||
             (GameObject.FindGameObjectsWithTag("coin").Length == 1 && GameObject.FindGameObjectsWithTag("LoveLiveROC").Length == 1))
         {
-
+            //do the gameover coroutine
             if (!gameOver)
             {
 
                 StartCoroutine(GameOverCoroutine());
                 
-
-               
+                //use bool value to check to avoid the coroutine being called indefinately
                 gameOver = true;
 
             }
-
+            //if player preseed return key, return to main menu
             if (Input.GetKeyDown(KeyCode.Return))
             {
 
-
                 SceneManager.LoadSceneAsync("StartScene", LoadSceneMode.Single);
-
 
             }
         }
@@ -166,36 +167,36 @@ public class PacStudentController : MonoBehaviour
     void GetMovementVector()
     {
        
-
+        //make pac go right if D is pressed
         if (Input.GetAxis("Horizontal") > 0 && isInputEnabled)
         {
 
             movement.x++;
            
-
         }
 
+        //make pac go left if A is pressed
         if (Input.GetAxis("Horizontal") < 0 && isInputEnabled)
         {
             movement.x--;
 
-
         }
 
+        //make pac go up if W is pressed
         if (Input.GetAxis("Vertical") > 0 && isInputEnabled)
         {
 
             movement.y++;
 
-
         }
 
+        //make pac go down if S is pressed
         if (Input.GetAxis("Vertical") < 0 && isInputEnabled)
         {
             movement.y--;
 
-
         }
+
         movement = Vector3.ClampMagnitude(movement, 1.0f);
         movementSqrMagnitude = movement.sqrMagnitude;
     }
@@ -210,21 +211,20 @@ public class PacStudentController : MonoBehaviour
 
     void FootstepAudio()
     {
-
+        //get the footstep audio and particles gameobjects
         AudioSource footStepSource = gameObject.GetComponent<AudioSource>();
         ParticleSystem theAshParticles = gameObject.GetComponent<ParticleSystem>();
         
 
-
+        //check the pac is moving or not by checking their position values
+        //if the pac is moving
         if (tempPosition.x - previousPosition.x > 0.1 || tempPosition.y - previousPosition.y > 0.1)
         {
 
-
+            //play the ash particles
             theAshParticles.Play();
-            //extraCollisionParticles.Stop();
-            //Debug.Log("moving");
-
-
+            
+            //play the foot step audio
             if (!footStepSource.isPlaying)
             {
 
@@ -235,14 +235,13 @@ public class PacStudentController : MonoBehaviour
 
         }
 
+        //if the pac is not moving
         else if (tempPosition.x - previousPosition.x < 0.1 && tempPosition.y - previousPosition.y < 0.1)
         {
-
+            //stop the ash particles
             theAshParticles.Stop();
-            //extraCollisionParticles.Emit(500);
-           // Debug.Log("not moving");
-
-
+            
+            //stop the foot step audio
             if (footStepSource.isPlaying)
             {
                 footStepSource.Stop();
@@ -256,26 +255,25 @@ public class PacStudentController : MonoBehaviour
     }
 
 
-    
-
+    //the following coroutine is to check the position of the pac to determine whether it is moving or not
     IEnumerator MyCoroutine()
     {
 
     marker:
 
-        //yield return null;
+        
         tempPosition = gameObject.transform.position;
-        //Debug.Log("tempPosition: " + tempPosition);
+        
         yield return new WaitForSecondsRealtime(0.4f);
         previousPosition = gameObject.transform.position;
-        //Debug.Log("previousPosition" + previousPosition);
+        
         yield return new WaitForSecondsRealtime(0.4f);
 
         goto marker;
 
     }
 
-
+    //format the time float value in minute, seconds, milliseconds
     string FormatTime(float time)
     {
         int intTime = (int)time;
@@ -287,34 +285,35 @@ public class PacStudentController : MonoBehaviour
         return timeText;
     }
 
+    //the following coroutine will be enbaled if gameover
     IEnumerator GameOverCoroutine()
     {
-
+        //stop the bgm from playing
         GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>().enabled = false;
         GameObject.FindGameObjectWithTag("ScaredBGM").GetComponent<AudioSource>().enabled = false;
-        //GameObject.FindGameObjectWithTag("Score").GetComponent<UnityEngine.UI.Text>().text = "Press enter for main menu";
-
-        //GameObject.FindGameObjectWithTag("Lose").GetComponent<AudioSource>().Play();
-
-
+        
+        //if the gameover is because of the player's defeat
         if (GameObject.FindGameObjectWithTag("Lives").GetComponent<UnityEngine.UI.Text>().text == "0")
-        {
+        {   
+            //display mission failed text
             GameObject.FindGameObjectWithTag("theTimer").GetComponent<UnityEngine.UI.Text>().text = "Mission Failed";
+            //play the defeat bgm (national anthem of the soviet union)
             GameObject.FindGameObjectWithTag("Lose").GetComponent<AudioSource>().Play();
-
-            //Debug.Log(GameObject.FindGameObjectWithTag("Lose"));
-
 
         }
 
-
+        //if the gameover is becuase of all pallets are eaten
         else
-        {
+        {   
+            //display mission accomplisehd text
             GameObject.FindGameObjectWithTag("theTimer").GetComponent<UnityEngine.UI.Text>().text = "Mission Accomplished";
+            //play the win bgm (internationale)
             GameObject.FindGameObjectWithTag("Win").GetComponent<AudioSource>().Play();
 
 
         }
+
+        //disable pacstudent's components
         GameObject.FindGameObjectWithTag("Player").GetComponent<SpriteRenderer>().enabled = false;
         GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>().enabled = false;
         GameObject.FindGameObjectWithTag("Player").GetComponent<AudioSource>().enabled = false;
@@ -329,10 +328,12 @@ public class PacStudentController : MonoBehaviour
         yield return null;
 
         // i could have implemented the "wait for 3 seconds and went back to main menu function
-        // but i made a ending music at the gameover scene so i did not implement it
-        
-        // SceneManager.LoadSceneAsync("StartScene", LoadSceneMode.Single);
+        // but i made two ending music at the gameover scene on flStudio so i did not implement it
+        // win bgm is the national anthem of the soviet union
+        // lose bgm is the internationale
 
+        // yield return WaitForSeconds(3f);
+        // SceneManager.LoadSceneAsync("StartScene", LoadSceneMode.Single);
 
 
     }

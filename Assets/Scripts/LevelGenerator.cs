@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
-    // Start is called before the first frame update
+    
 
     // declare the map array
     public bool isCountingDown = false;
@@ -29,14 +29,16 @@ public class LevelGenerator : MonoBehaviour
  {0,0,0,0,0,0,5,0,0,0,4,0,0,0},
  };
 
-
+    //declare the gamestart bool to be false 
     public bool gameStart = false;
 
     void Awake()
     {
-
+        //disabled the ghostDead countdown timer ui.text
         GameObject.FindGameObjectWithTag("ICBMCountdown").GetComponent<UnityEngine.UI.Text>().enabled = false;
+        //disabled the pacstudent controller while the 3,2,1 countdown has not finished
         GameObject.FindGameObjectWithTag("Player").GetComponent<PacStudentController>().enabled = false;
+        //do the 3,2,1 countdown by declaring a coroutine
         StartCoroutine(MyCoroutine());
         
 
@@ -160,12 +162,7 @@ public class LevelGenerator : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    //the count down coroutine
     IEnumerator MyCoroutine()
     {
 
@@ -177,10 +174,13 @@ public class LevelGenerator : MonoBehaviour
         yield return new WaitForSeconds(1f);
         GameObject.FindGameObjectWithTag("theTimer").GetComponent<UnityEngine.UI.Text>().text = "GO!";
         yield return new WaitForSeconds(1f);
+
+        //enable pacstudent controll if the countdown is finished
         GameObject.FindGameObjectWithTag("Player").GetComponent<PacStudentController>().enabled = true;
+        //play background music
         GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>().Play();
 
-
+        //gameStart bool become true
         gameStart = true;
 
     }
