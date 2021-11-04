@@ -64,7 +64,9 @@ public class Typer : MonoBehaviour
 
             liveReduced = true;
 
-            Destroy(wordOutput);
+            //Destroy(wordOutput);
+
+            wordOutput.enabled = false;
             GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ThirdSceneController>().currentWordIdentifier = 0;
             gameObject.GetComponent<SpriteRenderer>().enabled = false;
 
@@ -125,6 +127,8 @@ public class Typer : MonoBehaviour
                 //SetCurrentWord();
                 gameObject.GetComponent<ParticleSystem>().Emit(50);
                 Destroy(wordOutput);
+
+                wordOutput.enabled = false;
                 gameObject.GetComponent<SpriteRenderer>().enabled = false;
                 //Destroy(gameObject);
                 ICBMDestroyed = true;
